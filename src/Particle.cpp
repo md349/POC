@@ -2,27 +2,32 @@
 #include <iostream>
 #include "Particle.h"
 
-void Particle::initialise()
+void Particle::initialise(std::vector<float> p)
 {
   //set particle position
-  Position.push_back(0.0f);
-  Position.push_back(0.0f);
-  Position.push_back(0.0f);
+  Position.push_back(p[0]);
+  Position.push_back(p[1]);
+  Position.push_back(p[2]);
 
   //set particle as alive
   Alive = true;
 
+  //set how many passes the particle should stay alive
+  Life = 0;
+
   //set initial direction of particle travel
   //EDIT this to somehow shoot in various directions
+  //(b-a) therfore we need objet position as b and particle position as a.
+  //or random function
   Direction.push_back(0.0f);
   Direction.push_back(0.0f);
   Direction.push_back(0.0f);
 
   //set Particle velocity
-  //EDIT this...
-  Velocity.push_back(0.0f);
-  Velocity.push_back(0.0f);
-  Velocity.push_back(0.0f);
+  //EDIT this...maybe...
+  Velocity.push_back(0.2f);
+  Velocity.push_back(0.2f);
+  Velocity.push_back(0.2f);
 
   //set collided to false
   Collided = false;
@@ -45,5 +50,5 @@ void Particle::print() const
 //Particle dtor
 Particle::~Particle()
 {
-  std::cout<<"Particle dtor called \n";
+  //std::cout<<"Particle dtor called \n";
 }

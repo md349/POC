@@ -1,10 +1,67 @@
-SOURCES += \
-    main.cpp \
-    Emitter.cpp \
-    Object.cpp \
-    Particle.cpp
+#Specify the exec name
+TARGET=POC
+#put the .o files in
+OBJECTS_DIR=obj
+#core Qt libs to use add more if needed
+QT+=gui opengl core
 
-HEADERS += \
-    Emitter.h \
-    Object.h \
-    Particle.h
+# as I want to support 4.8 and 5 this will set a flag for some of the mac stuff
+# mainly in the types.h file for the setMacVisual which is native in Qt5
+isEqual(QT_MAJOR_VERSION, 5) {
+        cache()
+        DEFINES +=QT5BUILD
+}
+# where to put moc auto generated files
+MOC_DIR=moc
+# on a mac we don't create a .app bundle file ( for ease of multiplatform use)
+CONFIG-=app_bundle
+
+#add source files
+SOURCES+= $$PWD/src/*.cpp
+#add header files
+HEADERS+= $$PWD/include/*.h
+#add include path for Qt and make
+INCLUDEPATH+=./include
+#Where our exe is going to live
+DESTDIR=./
+# add other files
+OTHER_FILES+= README.md
+#default to console app
+CONFIG+=console
+
+# use this to suppress some warning from boost
+QMAKE_CXXFLAGS_WARN_ON += "-Wno-unused-parameter"
+# basic compiler flags (not all appropriate for all platforms)
+QMAKE_CXXFLAGS+= -msse -msse2 -msse3
+macx:QMAKE_CXXFLAGS+= -arch x86_64
+macx:INCLUDEPATH+=/usr/local/Cellar/boost/1.56.0/include
+linux-g++:QMAKE_CXXFLAGS +=  -march=native
+linux-g++-64:QMAKE_CXXFLAGS +=  -march=native
+# define the _DEBUG flag for the graphics lib
+DEFINES +=NGL_DEBUG
+
+unix:LIBS += -L/usr/local/lib
+# add the ngl lib
+unix:LIBS +=  -L/$(HOME)/NGL/lib -l NGL
+
+# now if we are under unix and not on a Mac (i.e. linux)
+linux-*{
+                linux-*:QMAKE_CXXFLAGS +=  -march=native
+                DEFINES += LINUX
+}
+DEPENDPATH+=include
+# if we are on a mac define DARWIN
+macx:DEFINES += DARWIN
+# this is where to look for includes
+INCLUDEPATH += $$(HOME)/NGL/include/
+
+win32: {
+        PRE_TARGETDEPS+=C:/NGL/lib/NGL.lib
+        INCLUDEPATH+=-I c:/boost
+        DEFINES+=GL42
+        DEFINES += WIN32
+        DEFINES+=_WIN32
+        DEFINES+=_USE_MATH_DEFINES
+        LIBS += -LC:/NGL/lib/ -lNGL
+        DEFINES+=NO_DLL
+}

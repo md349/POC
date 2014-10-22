@@ -5,13 +5,7 @@
 //print contents of Emitter Object
 void Emitter::print() const
 {
-  std::cout<<"Emitter Position = ["<<_ex<<", "<<_ey<<", "<<_ez<<"]\n";
-}
-
-void Emitter::Emit()
-{
-
-
+  std::cout<<"Emitter Position = ["<<Position[0]<<", "<<Position[1]<<", "<<Position[2]<<"]\n";
 }
 
 //Emitter dtor
