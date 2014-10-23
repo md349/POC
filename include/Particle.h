@@ -2,22 +2,29 @@
 #define PARTICLE_H
 
 #include <vector>
+#include <ngl/Vec3.h>
+#include <ngl/Random.h>
 
 class Particle
 {
   public:
+
+    Particle(ngl::Vec3 _ePos);
+
     //accessors
-    inline std::vector<float> getPosition() const {return Position;}
+    inline ngl::Vec3 getPosition() const {return _pPos;}
     inline bool getAlive() const {return Alive;}
-    inline std::vector<float> getDirection() const {return Direction;}
-    inline std::vector<float> getVelocity() const {return Velocity;}
+    inline ngl::Vec3 getDirection() const {return _pDir;}
+    inline ngl::Vec3 getVelocity() const {return _pVel;}
     inline bool getCollided() const {return Collided;}
     inline float getWeather() const {return Weathering;}
 
-    //mutators
-    //set default particle values
-    void initialise(std::vector<float> p);
-
+    //update Particles
+    void update(ngl::Vec3 _ePos);
+    //draw the Particle to the NGL window
+    void draw() const;
+    //update particles
+    void update();
     //print particle information
     void print() const;
 
@@ -26,19 +33,16 @@ class Particle
 
   private:
     //vector to store particle position
-    std::vector<float> Position;
+    ngl::Vec3 _pPos;
 
     //Bool to store whether a particle is still alive or not
     bool Alive;
 
-    //int to store how many iterations the particle has been alive
-    int Life;
-
     //vector to store particle direction
-    std::vector<float> Direction;
+    ngl::Vec3 _pDir;
 
     //vector to store particle velocity
-    std::vector<float> Velocity;
+    ngl::Vec3 _pVel;
 
     //Bool to store whether a particle has collided or not
     bool Collided;

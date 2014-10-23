@@ -8,6 +8,12 @@
 #include <ngl/Light.h>
 #include <ngl/Transformation.h>
 #include <ngl/Text.h>
+
+#include <vector>
+
+#include "Emitter.h"
+#include "Particle.h"
+
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief this class inherits from the Qt OpenGLWindow and allows us to use NGL to draw OpenGL
@@ -45,6 +51,8 @@ class NGLScene : public OpenGLWindow
 
 private:
 
+    Emitter *em;
+
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Qt Event called when the window is re-sized
     /// @param [in] _event the Qt event to query for size etc
@@ -80,6 +88,16 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
+    /**
+    //particle based
+    std::vector<float> emOrigin;
+
+    //create a vector to hold particle information
+    std::vector<Particle> particles;
+
+    //assign particle vector size to variable to use later in loops
+    int size;
+    **/
 
 };
 #endif // NGLSCENE_H

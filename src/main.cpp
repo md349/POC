@@ -13,17 +13,12 @@
 
 #include <iostream>
 #include <cstdio>
-#include <vector>
 
 #include "Emitter.h"
-#include "Object.h"
 #include "Particle.h"
 
 int main (int argc, char **argv)
 {
-
-  //Start of NGL Windowing code//
-  //Cite for Jon Macey (BlankNGL)//
   QGuiApplication app(argc, argv);
   // create an OpenGL format specifier
   QSurfaceFormat format;
@@ -54,42 +49,6 @@ int main (int argc, char **argv)
   window.resize(1024, 720);
   // and finally show
   window.show();
-
-  //End of Jon Macey's code//
-
-  //Create an emitter, one will do for now
-  Emitter em(1.0,2.7,0.5);
-
-  std::vector<float> emOrigin = em.getPosition();
-
-  //std::cout<<"Emitter Position = ["<<emOrigin[0]<<", "<<emOrigin[1]<<", "<<emOrigin[2]<<"]\n";
-
-  //create a vector to hold particle information
-  std::vector<Particle> particles(100);
-
-  //assign particle vector size to variable to use later in loops
-  int size = particles.size();
-
-  //loop through vector and initialise particle attributes
-  for(int i = 0; i < size; ++i)
-  {
-    particles[i].initialise(emOrigin);
-    std::vector<float> p = particles[i].getPosition();
-    //std::cout<<"Particle "<<i<<" Position = ["<<p[0]<<", "<<p[1]<<", "<<p[2]<<"]\n";
-  }
-
-  //Have 3 iterations to allow the particle time to collide
-  for(int i = 0; i < 3; ++i)
-  {
-    //iterate through each particle for each pass
-    for(int j = 0; j < size; ++j)
-    {
-
-    }
-  }
-
-  //Load object into the scene
-  Object obj;
 
   return app.exec();
 }

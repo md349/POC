@@ -6,6 +6,7 @@
 #include "NGLScene.h"
 #include <ngl/NGLInit.h>
 
+#include "Emitter.h"
 
 NGLScene::NGLScene(QWindow *_parent) : OpenGLWindow(_parent)
 {
@@ -33,14 +34,13 @@ void NGLScene::resizeEvent(QResizeEvent *_event )
   }
 }
 
-
 void NGLScene::initialize()
 {
   // we need to initialise the NGL lib which will load all of the OpenGL functions, this must
   // be done once we have a valid GL context but before we call any GL commands. If we dont do
   // this everything will crash
   ngl::NGLInit::instance();
-  glClearColor(0.8f, 0.8f, 0.8f, 1.0f);			   // Grey Background
+  glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
   // enable multisampling for smoother drawing
@@ -48,7 +48,7 @@ void NGLScene::initialize()
   // as re-size is not explicitly called we need to do this.
   glViewport(0,0,width(),height());
 
-
+  em = new Emitter(0,0,2,100);
 }
 
 void NGLScene::render()
@@ -56,6 +56,15 @@ void NGLScene::render()
   // clear the screen and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  for(int i = 0; i < em->getNP(); ++i)
+  {
+    em->draw();
+  }
+
+  for(int i = 0; i < em->getNP(); ++i)
+  {
+    em->update();
+  }
 
 }
 

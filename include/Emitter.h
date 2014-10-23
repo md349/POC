@@ -1,29 +1,39 @@
 #ifndef EMITTER_H
 #define EMITTER_H
 
-#include<vector>
+#include <vector>
+#include <ngl/Vec3.h>
+
+#include "Particle.h"
 
 class Emitter{
 
   public:
     //set position. Defaults to origin
-    inline Emitter (float _x = 0.0f, float _y = 0.0f, float _z = 0.0f) {
-                    Position.push_back(_x);
-                    Position.push_back(_y);
-                    Position.push_back(_z);
-    }
+    Emitter (float _x = 0.0f,
+             float _y = 0.0f,
+             float _z = 0.0f,
+             int _numParticles = 100
+            );
 
     //accessors
-    inline std::vector<float> getPosition() const {return Position;}
-
-    //mutators
+    inline ngl::Vec3 getPosition() const {return _ePos;}
+    inline int getNP() const {return _nP;}
     //print the contents of the emitter class
     void print() const;
+
+    //draw function
+    void draw() const;
+
+    //update function
+    void update();
 
     //destructor
     ~Emitter();
 
   private:
-    std::vector<float> Position;
+    ngl::Vec3 _ePos;
+    std::vector<Particle> particles;
+    int _nP;
 };
 #endif // EMITTER_H
